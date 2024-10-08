@@ -4,8 +4,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Landing from './Screens/Landing'
+import Login from './Screens/Login'
+import Signup from './Screens/Signup';
+import MyTrip from './Screens/MyTrip';
+import Discover from './Screens/Discover';
+import Profile from './Screens/Profile';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {Entypo} from "@expo/vector-icons";
+
+
+import { auth } from './Configs/FireBaseConfig';
+
 
 const stack=createStackNavigator()
+const Tab=createBottomTabNavigator()
+
+
+
 
 function StackNavigator(){
   return(
@@ -17,13 +32,66 @@ function StackNavigator(){
     headerTitleStyle:{fontWeight:"bold"},
    }}>
 
-   <stack.Screen name="Travel App" component={Landing} options={{headerShown:false}}/>
+   <stack.Screen name="Landing" component={Landing} options={{headerShown:false}}/>
+   <stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+   <stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
+   <stack.Screen name="MyTrip" component={TabNavigator} options={{headerShown:false}}/>
+
   </stack.Navigator>
   )
 }
 
+function TabNavigator(){
+  return(
+    <Tab.Navigator  screenOptions={{headerShown:false}}>
+      <Tab.Screen 
+      name='My Trip' 
+      component={MyTrip}
+      options={{
+        tabBarIcon:({focused})=>{
+          return(
+            <View style={{alignItems:"center", justifyContent:"center"}}>
+              <Entypo name="location" size={27} color={focused ? "#111":"grey"}/>
+            </View>
+          )
+        }
+      }}
+      />
+      <Tab.Screen 
+      name='Discover' 
+      component={Discover}
+      options={{
+        tabBarIcon:({focused})=>{
+          return(
+            <View style={{alignItems:"center", justifyContent:"center"}}>
+              <Entypo name="globe" size={27} color={focused ? "#111":"grey"}/>
+            </View>
+          )
+        }
+      }}
+      />
+      <Tab.Screen 
+      name='Profile' 
+      component={Profile}
+      options={{
+        tabBarIcon:({focused})=>{
+          return(
+            <View style={{alignItems:"center", justifyContent:"center"}}>
+              <Entypo name="user" size={27} color={focused ? "#111":"grey"}/>
+            </View>
+          )
+        }
+      }}
+      />
+    </Tab.Navigator>
+    )
+}
+
 
 const App=()=>{
+
+  const user =auth.currentUser;
+
   return(
     <NavigationContainer>
       <StackNavigator/>
