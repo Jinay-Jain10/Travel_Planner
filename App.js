@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
@@ -14,7 +14,10 @@ import {Entypo} from "@expo/vector-icons";
 
 
 import { auth } from './Configs/FireBaseConfig';
-
+import SearchPlace from './Screens/CreateTrip/SearchPlace';
+import StartNewTripCard from './Screens/MyTrips/StartNewTripCard';
+import { CreateTripContext } from './Screens/Context/CreateTripContext';
+import SelectTraveller from './Screens/CreateTrip/SelectTraveller';
 
 const stack=createStackNavigator()
 const Tab=createBottomTabNavigator()
@@ -36,6 +39,9 @@ function StackNavigator(){
    <stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
    <stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
    <stack.Screen name="MyTrip" component={TabNavigator} options={{headerShown:false}}/>
+   <stack.Screen name="SearchPlace" component={SearchPlace} options={{headerShown:false}}/>
+   <stack.Screen name="StartNewTripCard" component={StartNewTripCard} options={{headerShown:false}}/>
+   <stack.Screen name="SelectTraveller" component={SelectTraveller} options={{headerShown:false}}/>
 
   </stack.Navigator>
   )
@@ -91,11 +97,13 @@ function TabNavigator(){
 const App=()=>{
 
   const user =auth.currentUser;
-
+  const [tripData,setTripData]=useState([]);
   return(
-    <NavigationContainer>
-      <StackNavigator/>
-    </NavigationContainer>
+    <CreateTripContext.Provider value={{tripData,setTripData}}>
+      <NavigationContainer>
+        <StackNavigator/>
+      </NavigationContainer>
+    </CreateTripContext.Provider>
   )
 }
 

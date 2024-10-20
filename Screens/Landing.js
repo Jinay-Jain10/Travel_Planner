@@ -12,7 +12,7 @@ export default function Landing({navigation}) {
   const user=auth.currentUser;
 
   return (
-    user? TaketoMyTrip:[
+    // user? TaketoMyTrip:[
     <View >
       <Image source={require('./../assets/landingimage.jpg')}
       style={{width:'100%',height:480}}
@@ -34,7 +34,7 @@ export default function Landing({navigation}) {
       </View>
       <StatusBar style="auto" />
     </View>
-    ]
+    // ]
     
   );
 }
