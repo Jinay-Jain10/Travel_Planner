@@ -18,6 +18,9 @@ import SearchPlace from './Screens/CreateTrip/SearchPlace';
 import StartNewTripCard from './Screens/MyTrips/StartNewTripCard';
 import { CreateTripContext } from './Screens/Context/CreateTripContext';
 import SelectTraveller from './Screens/CreateTrip/SelectTraveller';
+import SelectDate from './Screens/CreateTrip/SelectDate';
+import SelectBudget from './Screens/CreateTrip/SelectBudget';
+import ReviewTrip from './Screens/CreateTrip/ReviewTrip';
 
 const stack=createStackNavigator()
 const Tab=createBottomTabNavigator()
@@ -42,6 +45,9 @@ function StackNavigator(){
    <stack.Screen name="SearchPlace" component={SearchPlace} options={{headerShown:false}}/>
    <stack.Screen name="StartNewTripCard" component={StartNewTripCard} options={{headerShown:false}}/>
    <stack.Screen name="SelectTraveller" component={SelectTraveller} options={{headerShown:false}}/>
+   <stack.Screen name="SelectDate" component={SelectDate} />
+   <stack.Screen name="SelectBudget" component={SelectBudget}/>
+   <stack.Screen name="ReviewTrip" component={ReviewTrip}/>
 
   </stack.Navigator>
   )
