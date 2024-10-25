@@ -21,6 +21,7 @@ import SelectTraveller from './Screens/CreateTrip/SelectTraveller';
 import SelectDate from './Screens/CreateTrip/SelectDate';
 import SelectBudget from './Screens/CreateTrip/SelectBudget';
 import ReviewTrip from './Screens/CreateTrip/ReviewTrip';
+import GenerateTrip from './Screens/CreateTrip/GenerateTrip';
 
 const stack=createStackNavigator()
 const Tab=createBottomTabNavigator()
@@ -48,6 +49,7 @@ function StackNavigator(){
    <stack.Screen name="SelectDate" component={SelectDate} />
    <stack.Screen name="SelectBudget" component={SelectBudget}/>
    <stack.Screen name="ReviewTrip" component={ReviewTrip}/>
+   <stack.Screen name="GenerateTrip" component={GenerateTrip}/>
 
   </stack.Navigator>
   )

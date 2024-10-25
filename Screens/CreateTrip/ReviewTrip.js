@@ -129,6 +129,7 @@ export default function ReviewTrip() {
       </View>
 
       <TouchableOpacity
+      onPress={()=>navigation.navigate("GenerateTrip")}
         style={{
           padding: 15,
           backgroundColor: "black",
