@@ -8,6 +8,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import UserTripList from "./MyTrips/UserTripList";
 import { tr } from "date-fns/locale";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 
@@ -45,10 +46,11 @@ export default function MyTrip() {
   }
 
   return (
-    <View
+    <ScrollView
       style={{
         padding: 25,
         paddingTop: 55,
+        paddingBottom:55,
         backgroundColor: "white",
         height: "100%",
       }}
@@ -72,6 +74,6 @@ export default function MyTrip() {
 
 
       {tripDataUser?.length == 0 ? <StartNewTripCard /> : <UserTripList tripDataUser={tripDataUser}/>}
-    </View>
+    </ScrollView>
   );
 }

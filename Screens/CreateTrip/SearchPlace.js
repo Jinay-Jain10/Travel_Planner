@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { CreateTripContext } from "../Context/CreateTripContext";
 
-const API_KEY = '-'; // Replace with your actual API key
+const API_KEY = ''; // Replace with your actual API key
 
 const SearchPlace = () => {
   const { tripData, setTripData } = useContext(CreateTripContext);

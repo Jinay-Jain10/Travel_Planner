@@ -1,127 +1,150 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ToastAndroid,
-} from "react-native";
-import { useNavigation, useScrollToTop } from "@react-navigation/native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ToastAndroid } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { CreateTripContext } from "../Context/CreateTripContext";
 
 export default function SelectBudget() {
-  const navigation = useNavigation();
-  const [selectedBudget, setSelectedBudget] = useState();
-  const { tripData, setTripData } = useContext(CreateTripContext);
+    const navigation = useNavigation();
+    const [selectedBudget, setSelectedBudget] = useState(null);
+    const { tripData, setTripData } = useContext(CreateTripContext);
 
-  const onClickContinue = () => {
-    if (!selectedBudget) {
-      ToastAndroid.show("Please select your budget", ToastAndroid.LONG);
-      return;
-    } else {
-      navigation.navigate("ReviewTrip");
-    }
-  };
+    const onClickContinue = () => {
+        if (!selectedBudget) {
+            ToastAndroid.show("Please select your budget", ToastAndroid.LONG);
+            return;
+        } else {
+            navigation.navigate("ReviewTrip");
+        }
+    };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      headerTransparent: true,
-      headerTitle: "",
-    });
-  }, []);
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: true,
+            headerTransparent: true,
+            headerTitle: "",
+        });
+    }, []);
 
-  useEffect(() => {
-    selectedBudget &&
-      setTripData({
-        ...tripData,
-        budget: selectedBudget?.title,
-      });
-  }, [selectedBudget]);
+    useEffect(() => {
+        if (selectedBudget) {
+            setTripData({
+                ...tripData,
+                budget: selectedBudget?.title,
+            });
+        }
+    }, [selectedBudget]);
 
-  useEffect(() => {
-    console.log(tripData);
-  }, [tripData]);
+    const OptionList = [
+        {
+            id: 1,
+            title: "Cheap",
+            desc: "Stay conscious of costs",
+            icon: "💵",
+        },
+        {
+            id: 2,
+            title: "Moderate",
+            desc: "Keep cost on the average end",
+            icon: "💰",
+        },
+        {
+            id: 3,
+            title: "Luxurious",
+            desc: "Don't worry about costs",
+            icon: "💸",
+        },
+    ];
 
-  const OptionList = [
-    {
-      id: 1,
-      title: "Cheap",
-      desc: "Stay conscious of costs",
-      icon: "💵",
-    },
-    {
-      id: 2,
-      title: "Moderate",
-      desc: "Keep cost on the average end",
-      icon: "💰",
-    },
-    {
-      id: 3,
-      title: "Luxurious",
-      desc: "Don't worry about costs",
-      icon: "💸",
-    },
-  ];
+    return (
+        <View style={styles.container}>
+            <Text style={styles.heading}>Budget</Text>
 
-  return (
-    <View style={{ paddingTop: 85, padding: 25 }}>
-      <Text style={{ fontWeight: "bold", fontSize: 35, maginTop: 20 }}>
-        {" "}
-        Budget
-      </Text>
-
-      <View style={{ marginTop: 20, paddingLeft: 5 }}>
-        <Text style={{ fontSize: 17, fontWeight: 800 }}>
-          Choose spending habits for your trip
-        </Text>
-      </View>
-
-      <FlatList
-        data={OptionList}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => setSelectedBudget(item)}
-            style={{ marginVertical: 10 }}
-          >
-            <View
-              style={[
-                {
-                  padding: 25,
-                  display: "flex",
-                  borderRadius: 15,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  backgroundColor: "#d3d3d3",
-                },
-                selectedBudget?.id == item?.id && { borderWidth: 3 },
-              ]}
-            >
-              <View>
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  {item.title}
-                </Text>
-                <Text style={{ fontSize: 17, color: "grey" }}>{item.desc}</Text>
-              </View>
-
-              <Text style={{ fontSize: 30 }}>{item.icon}</Text>
+            <View style={styles.subHeadingContainer}>
+                <Text style={styles.subHeading}>Choose spending habits for your trip</Text>
             </View>
-          </TouchableOpacity>
-        )}
-      />
 
-      <TouchableOpacity
-        onPress={() => onClickContinue()}
-        style={{
-          padding: 15,
-          backgroundColor: "black",
-          borderRadius: 15,
-          marginTop: 30,
-        }}
-      >
-        <Text style={{ textAlign: "center", color: "white" }}>Continue</Text>
-      </TouchableOpacity>
-    </View>
-  );
+            <FlatList
+                data={OptionList}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => setSelectedBudget(item)}
+                        style={styles.optionContainer}
+                    >
+                        <View
+                            style={[
+                                styles.optionItem,
+                                selectedBudget?.id === item?.id && styles.selectedOption,
+                            ]}
+                        >
+                            <View>
+                                <Text style={styles.optionTitle}>{item.title}</Text>
+                                <Text style={styles.optionDesc}>{item.desc}</Text>
+                            </View>
+                            <Text style={styles.optionIcon}>{item.icon}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+            />
+
+            <TouchableOpacity onPress={onClickContinue} style={styles.continueButton}>
+                <Text style={styles.continueButtonText}>Continue</Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingTop: 85,
+        padding: 25,
+    },
+    heading: {
+        fontWeight: "bold",
+        fontSize: 35,
+        marginTop: 20,
+    },
+    subHeadingContainer: {
+        marginTop: 20,
+        paddingLeft: 5,
+    },
+    subHeading: {
+        fontSize: 17,
+        fontWeight: "800",
+    },
+    optionContainer: {
+        marginVertical: 10,
+    },
+    optionItem: {
+        padding: 25,
+        display: "flex",
+        borderRadius: 15,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "#d3d3d3",
+    },
+    selectedOption: {
+        borderWidth: 3,
+        borderColor: "black",
+    },
+    optionTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    optionDesc: {
+        fontSize: 14,
+    },
+    optionIcon: {
+        fontSize: 35,
+    },
+    continueButton: {
+        padding: 15,
+        backgroundColor: "black",
+        borderRadius: 15,
+        marginTop: 30,
+    },
+    continueButtonText: {
+        textAlign: "center",
+        color: "white",
+    },
+});

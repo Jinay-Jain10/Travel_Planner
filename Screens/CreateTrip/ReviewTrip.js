@@ -103,7 +103,6 @@ export default function ReviewTrip() {
           </Text>
           <Text style={{ fontWeight: 600, fontSize: 19 }}>
             {tripData.travellerCount.title}
-            {/* ({tripData.travellerCount.people}) */}
           </Text>
         </View>
       </View>
